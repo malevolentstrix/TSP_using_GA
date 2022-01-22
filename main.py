@@ -3,6 +3,9 @@
 import numpy
 import random
 import itertools
+import graphviz
+import time
+g = [None]*100
 
 
 '''
@@ -198,16 +201,29 @@ while generation < maxgeneration:
 
     toursdistance = []
     for i in range(len(population)):
+        g[i] = graphviz.Digraph('Tour{0}'.format(str(i)), filename='TourGraph{0}'.format(str(i)), comment = 'chorr')
         tourdistance = 0
         for j in range(len(population[i])-1):
             for v in range(len(tours)):
                 if tours[v][0] == (str(population[i][j])+"-"+str(population[i][j+1])):
                     tourdistance = tourdistance + tours[v][1]
+                    g[i].edge('City'+str(population[i][j]), 'City'+str(population[i][j+1]), label= str(tours[v][1]), color = 'green')
+                    #graphpathvals[v] = tours[v][1]
+                    print("numbers needed")
+                    print(str(population[i][j]), str(population[i][j+1]), tours[v][1])
                 elif tours[v][0] == (str(population[i][j+1])+"-"+str(population[i][j])):
                     tourdistance = tourdistance + tours[v][1]
+                    #graphpathvals[v] = tours[v][1]
+                    print("numbers needed2")
+                    print(str(population[i][j]), str(population[i][j+1]), tours[v][1])
+                    g[i].edge('City'+str(population[i][j]), 'City'+(str(population[i][j+1])), label=  str(tours[v][1]), color = 'red')
+                g[i].attr(label=r'\n\nDiagram for\n{0}\n'.format(str(population[i]))+' which has tour distance {0}'.format(str(tourdistance)))
+        time.sleep(1)
+        g[i].view()
         toursdistance.append(tourdistance)
 
     result = (list(zip(population, toursdistance)))
+    print(result)
     result = sorted(result, key=lambda i: i[1])
     population = []
     print("generation is: ", generation + 1)
