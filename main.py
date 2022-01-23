@@ -201,7 +201,7 @@ while generation < maxgeneration:
 
     toursdistance = []
     for i in range(len(population)):
-        g[i] = graphviz.Digraph('Tour{0}'.format(str(i)), filename='TourGraph{0}'.format(str(i)), comment = 'chorr')
+        g[i] = graphviz.Digraph('Tour{0}'.format(str(i)+1), filename='TourGraph{0}'.format(str(i)+1), comment = 'chorr')
         tourdistance = 0
         for j in range(len(population[i])-1):
             for v in range(len(tours)):
@@ -219,7 +219,8 @@ while generation < maxgeneration:
                     g[i].edge('City'+str(population[i][j]), 'City'+(str(population[i][j+1])), label=  str(tours[v][1]), color = 'red')
                 g[i].attr(label=r'\n\nDiagram for\n{0}\n'.format(str(population[i]))+' which has tour distance {0}'.format(str(tourdistance)))
         time.sleep(1)
-        g[i].view()
+        g[i].render()
+        #g[i].view()
         toursdistance.append(tourdistance)
 
     result = (list(zip(population, toursdistance)))
