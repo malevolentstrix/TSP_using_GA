@@ -1,4 +1,6 @@
-
+# BY JITHIN JOHN
+# AM.EN.U4AIE20135
+# CSE(AI) | B - BATCH
 
 import numpy
 import random
@@ -7,40 +9,6 @@ import graphviz
 import time
 g = [None]*100
 
-
-'''
-
-citycount = random.randrange(5, 10)
-
-routecount = (citycount*(citycount -1))/2
-
-cities =[]
-for i in range(citycount):
-    cities.append(i+1)
-
-routes = []
-maxdistance = 0
-besttour =[]
-for i in range(routecount):
-    routes.append(random.randrange(1,20))
-    maxdistance = maxdistance + routes[i]
-    
-
-tours =[]
-n1=0
-n2 =0
-for i in range(routecount):
-    if n2==citycount-1:
-        n1 = n1+1
-        n2 =n1
-            
-    tours.append([])
-    tours[i].append(str(cities[n1])+"-"+str(cities[n2+1]))
-    tours[i].append(routes[i])
-    n2 = n2 +1
-'''
-
-
 cities = [1, 2, 3, 4, 5]
 citycount = 5
 routecount = (citycount*(citycount - 1))/2
@@ -48,11 +16,9 @@ routes = [4, 4, 7, 3, 2, 3, 5, 2, 3, 6]
 tours = [['1-2', 4], ['1-3', 4], ['1-4', 7], ['1-5', 3], ['2-3', 2],
          ['2-4', 3], ['2-5', 5], ['3-4', 2], ['3-5', 3], ['4-5', 6]]
 
-
 maxdistance = 0
 for i in range(len(routes)):
     maxdistance = maxdistance + routes[i]
-
 
 print(cities)
 print(routes)
@@ -71,7 +37,6 @@ randomtourscount = populationcount - xovercount/2 - mutationcount
 print("population: ", populationcount, " crossovers: ", xovercount,
       " mutations: ", mutationcount, " random tours: ", randomtourscount)
 
-
 population = []
 citysequence = []
 
@@ -89,7 +54,6 @@ for i in range(populationcount):
         citysequence2.append(citysequence[j][0])
 
     population.append(citysequence2)
-
 
 print(population)
 for i in range(len(population)):
@@ -201,26 +165,32 @@ while generation < maxgeneration:
 
     toursdistance = []
     for i in range(len(population)):
-        g[i] = graphviz.Digraph('Tour{0}'.format(str(i)+1), filename='TourGraph{0}'.format(str(i)+1), comment = 'chorr')
+        g[i] = graphviz.Digraph('Tour{0}'.format(
+            str(i+1)), filename='TourGraph{0}'.format(str(i+1)), comment='chorr')
         tourdistance = 0
         for j in range(len(population[i])-1):
             for v in range(len(tours)):
                 if tours[v][0] == (str(population[i][j])+"-"+str(population[i][j+1])):
                     tourdistance = tourdistance + tours[v][1]
-                    g[i].edge('City'+str(population[i][j]), 'City'+str(population[i][j+1]), label= str(tours[v][1]), color = 'green')
+                    g[i].edge('City'+str(population[i][j]), 'City' +
+                              str(population[i][j+1]), label=str(tours[v][1]), color='green')
                     #graphpathvals[v] = tours[v][1]
                     print("numbers needed")
-                    print(str(population[i][j]), str(population[i][j+1]), tours[v][1])
+                    print(str(population[i][j]), str(
+                        population[i][j+1]), tours[v][1])
                 elif tours[v][0] == (str(population[i][j+1])+"-"+str(population[i][j])):
                     tourdistance = tourdistance + tours[v][1]
                     #graphpathvals[v] = tours[v][1]
                     print("numbers needed2")
-                    print(str(population[i][j]), str(population[i][j+1]), tours[v][1])
-                    g[i].edge('City'+str(population[i][j]), 'City'+(str(population[i][j+1])), label=  str(tours[v][1]), color = 'red')
-                g[i].attr(label=r'\n\nDiagram for\n{0}\n'.format(str(population[i]))+' which has tour distance {0}'.format(str(tourdistance)))
+                    print(str(population[i][j]), str(
+                        population[i][j+1]), tours[v][1])
+                    g[i].edge('City'+str(population[i][j]), 'City' +
+                              (str(population[i][j+1])), label=str(tours[v][1]), color='red')
+                g[i].attr(label=r'\n\nDiagram for\n{0}\n'.format(
+                    str(population[i]))+' which has tour distance {0}'.format(str(tourdistance)))
         time.sleep(1)
         g[i].render()
-        #g[i].view()
+        # g[i].view()
         toursdistance.append(tourdistance)
 
     result = (list(zip(population, toursdistance)))
@@ -256,3 +226,4 @@ while generation < maxgeneration:
 
 for i in range(len(besttour)):
     print("best tour ", besttour[i], " with distance ", maxdistance)
+    
