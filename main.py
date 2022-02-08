@@ -6,6 +6,8 @@ import random
 import itertools
 import graphviz
 import time
+
+start = time.time()
 g = [None]*100
 
 cities = [1, 2, 3, 4, 5]
@@ -222,7 +224,7 @@ while generation < maxgeneration:
         population[i] = (population[i])[:-1]
 
     generation = generation + 1
-
+end = time.time()
 
 for i in range(len(besttour)):
     g[i] = graphviz.Digraph('Tour{0}'.format(
@@ -246,3 +248,6 @@ for i in range(len(besttour)):
 for i in range(len(besttour)):
     print("The best tour ", str(i+1),
           besttour[i], " with distance ", maxdistance)
+
+
+print(f"Runtime of the program : {end - start}")
